@@ -1,0 +1,23 @@
+server:
+  port: 7777
+
+
+imageUrlPath:
+  img1: ./img1.txt
+  3ciyuan: ./img2.txt
+  2ciyuan: ./img3.txt
+  all: ./img4.txt
+
+  #pc电脑，sj手机 dy抖音
+  pc18: ./pc18.txt  #18+
+  pccos: ./pccos.txt #cos
+  pcecy: ./pcecy.txt # 二次元
+  pcfj: ./pcfj.txt #风景
+  pcmv: ./pcmv.txt #美女
+  sj18: ./sj18.txt
+  sjcos: ./sjcos.txt
+  sjecy: ./sjecy.txt
+  sjfj: ./sjfj.txt
+  sjmv: ./sjmv.txt
+  dyjk: ./dyjk.txt
+  dycos: ./dycos.txt
