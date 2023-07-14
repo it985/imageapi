@@ -1,5 +1,5 @@
 # 使用一个基础的Java镜像作为构建环境
-FROM maven:3.8.1-openjdk-11-slim AS builder
+FROM maven:3.8.6-openjdk-11-slim AS builder
 # 设置工作目录
 WORKDIR /app
 # 将应用程序的依赖项复制到容器中
