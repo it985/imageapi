@@ -15,7 +15,7 @@ RUN mvn package -DskipTests
 # 设置工作目录
 WORKDIR /app
 # 从构建阶段复制应用程序
-COPY --from=0 /app/target/image-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/target/image-0.0.1-SNAPSHOT.jar .
 
 # 设置环境变量，用于传递commit hash
 ARG COMMIT_HASH
