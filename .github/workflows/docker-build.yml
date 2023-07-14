@@ -18,14 +18,14 @@ jobs:
 
       - name: Build and push Docker image
         env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN  }}
+#          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN  }}
         run: |
           # Get commit hash
           COMMIT_HASH=$(git rev-parse --short HEAD)
           
           # Build and push Docker image
-          echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+          echo $DOCKERHUB_TOKEN | docker login -u study996 --password-stdin
           docker build -t study996/imageapi:${COMMIT_HASH} -f Dockerfile .
           docker push study996/imageapi:${COMMIT_HASH}
 
