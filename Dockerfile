@@ -20,6 +20,10 @@ ARG COMMIT_HASH
 ENV COMMIT_HASH=${COMMIT_HASH}
 # 构建镜像时指定commit hash作为tag
 LABEL commit_hash=${COMMIT_HASH}
+ENV JVM_XMS="256m" \
+    JVM_XMX="256m" \
+    JVM_OPTS="-Xmx256m -Xms256m" \
+    TZ=Asia/Shanghai
 # 暴露应用程序的端口（如果需要）
 EXPOSE 7777
 # 启动应用程序
