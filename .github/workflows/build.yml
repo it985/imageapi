@@ -1,9 +1,14 @@
-name: Build and Release JAR
+name: Maven Build and Release
 
 on:
-  release:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * 0" # 每周日午夜运行
+  pull_request:
     types:
-      - created
+      - closed
 
 jobs:
   build:
@@ -14,13 +19,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up JDK
-      - uses: actions/setup-java@v3
+          - uses: actions/setup-java@v3
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
 
-      - name: Build JAR
-        run: mvn package
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Get Last Commit Message
+        id: commit_message
+        run: echo "::set-output name=message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
       - name: Create Release
         id: create_release
@@ -30,15 +39,39 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this release:
+            - ${{ steps.commit_message.outputs.message }}
           draft: false
           prerelease: false
 
-      - name: Upload JAR to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+  cleanup:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Releases
+        id: list_releases
+        uses: actions/github-script@v4
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/image-0.0.1-SNAPSHOT.jar
-          asset_name: image-0.0.1-SNAPSHOT.jar
-          asset_content_type: application/java-archive
+          script: |
+            const response = await github.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            const releases = response.data;
+            releases.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            const releasesToDelete = releases.slice(3);
+            core.setOutput('releasesToDelete', releasesToDelete.map(release => release.id));
+
+      - name: Delete Releases
+        if: steps.list_releases.outputs.releasesToDelete != ''
+        uses: actions/github-script@v4
+        with:
+          script: |
+            for (const releaseId of context.outputs.releasesToDelete) {
+              await github.repos.deleteRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: releaseId,
+              });
+            }
