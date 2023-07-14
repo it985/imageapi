@@ -8,8 +8,8 @@ COPY src ./src
 COPY *.txt  .
 # 构建应用程序
 RUN ./mvnw package -DskipTests
-# 使用一个轻量级的Java镜像作为最终镜像
-FROM openjdk:11-jre-slim
+## 使用一个轻量级的Java镜像作为最终镜像
+#FROM openjdk:11-jre-slim
 # 设置工作目录
 WORKDIR /app
 # 从构建阶段复制应用程序
