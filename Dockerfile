@@ -1,5 +1,4 @@
 # 使用一个基础的Java镜像作为构建环境
-#FROM openjdk:11-jdk AS build
 FROM maven:3.6.3-jdk-11-slim
 # 设置工作目录
 WORKDIR /app
