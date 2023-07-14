@@ -1,5 +1,5 @@
 # 使用一个基础的Java镜像作为构建环境
-FROM openjdk:11-jdk
+FROM openjdk:11-jdk AS build
 # 设置工作目录
 WORKDIR /app
 # 将应用程序的依赖项复制到容器中
@@ -13,7 +13,7 @@ FROM openjdk:11-jre-slim
 # 设置工作目录
 WORKDIR /app
 # 从构建阶段复制应用程序
-COPY --from=build /app/target/image-0.0.1-SNAPSHOT.jar .
+COPY --from=0 /app/target/image-0.0.1-SNAPSHOT.jar .
 
 # 设置环境变量，用于传递commit hash
 ARG COMMIT_HASH
