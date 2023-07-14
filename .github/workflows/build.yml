@@ -48,15 +48,17 @@ jobs:
               per_page: 1
             });
             console.log(commits.data[0].commit.message);
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Create a Release
+        uses: elgohr/Github-Release-Action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: imageapi
           body: |
             Changes in this release:
             - ${{ steps.commit_message.outputs.message }}
