@@ -5,8 +5,7 @@ java随机图片api 在不改变当前url的情况下刷新可获取新的图片
 
 1.  下载项目后idea打开
 2.  在yml里面指定存放图片url的文件
-3.  使用maven命令打jar包
-> mvn -B clean package -Dmaven.test.skip=true 
+3.  使用maven命令打jar包`mvn -B clean package -Dmaven.test.skip=true` 
 4.  将打好的jar包上传者linux 并开放7777端口
 5.  执行命令 nohup java -jar XXX.jar
 6.  访问api   http://你的ip:7777/
@@ -49,7 +48,7 @@ java随机图片api 在不改变当前url的情况下刷新可获取新的图片
 imageUrlPath:
   xxx: ./xxx.txt
 ```
-4. 在com/random/image/controller/RandomApi.java 中添加 demo
+4. 在RandomApi.java 中添加 demo
 ```demo
 @RestController
 public class RandomApi {
