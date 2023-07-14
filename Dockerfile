@@ -6,6 +6,8 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 COPY *.txt  ./
+COPY mvnw .
+COPY .mvn ./.mvn
 # 构建应用程序
 RUN ./mvnw package -DskipTests
 ## 使用一个轻量级的Java镜像作为最终镜像
