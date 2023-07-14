@@ -5,7 +5,7 @@ WORKDIR /app
 # 将应用程序的依赖项复制到容器中
 COPY pom.xml .
 COPY src ./src
-COPY *.txt  .
+COPY *.txt  ./
 # 构建应用程序
 RUN ./mvnw package -DskipTests
 ## 使用一个轻量级的Java镜像作为最终镜像
