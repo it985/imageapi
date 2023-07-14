@@ -26,8 +26,9 @@ jobs:
           
           # Build and push Docker image
           echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-          docker build -t study996/imageapi:${COMMIT_HASH} .
+          docker build -t study996/imageapi:${COMMIT_HASH} -f Dockerfile .
           docker push study996/imageapi:${COMMIT_HASH}
+
 
 
 #      - name: Login to Docker Hub
