@@ -20,6 +20,7 @@ springboot+OKHTTP3
 1. docker pull study996/imageapi
 2. 运行docker run study996/imageapi:latest
 3. 访问api   http://你的ip:7777/
+4. docker run -v [txt目录] /  --name=imageapi   study996/imageapi:latest
 #### 使用说明
 
 1.  因为获取图片是通过url的方式,所以你可以自行搭配图床,或者从壁纸网站弄点图片url
@@ -47,4 +48,41 @@ springboot+OKHTTP3
         return bytes1;
     }
 ```
+#### pr规则
+1. 图片分类见名知意 
+2. 根目录下添加xxx.txt
+3. 在application.yml中的imageUrlPath下添加
+```demo
+imageUrlPath:
+  xxx: ./xxx.txt
+```
+3. 在RandomApi.java 中添加 demo
+```demo
+@RestController
+public class RandomApi {
+    private static OkHttpClient client = OkhttpUtils.okHttpClient();
 
+    @Value("${imageUrlPath.xxx}")
+    private String dycos;
+
+    @GetMapping(value = "/{path}",produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseBody
+    public byte[] test2(@PathVariable(value = "path",required = false) String path) throws IOException {
+        HashMap<String, String> map = new HashMap<>();
+       
+        map.put("xxx",xxx);   
+        
+        File file = new File(map.get(path));
+        ArrayList<String> urls = ReadFiledata.txt2String(file);
+        Random random = new Random();
+        Request request = new Request.Builder()
+                .url(urls.get(random.nextInt(urls.size())))
+                .get()
+                .build();
+        Response response = client.newCall(request).execute();
+        byte[] bytes1 = response.body().bytes();
+        return bytes1;
+    }
+}
+**注意** : img1.txt---img4.txt为demo
+```
