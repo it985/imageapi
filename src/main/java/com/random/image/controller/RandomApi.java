@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 public class RandomApi {
     private static OkHttpClient client = OkhttpUtils.okHttpClient();
@@ -74,9 +73,14 @@ public class RandomApi {
         map.put("sjmv",sjmv);
         map.put("dyjk",dyjk);
         map.put("dycos",dycos);
+//        OkHttpClient client = new OkHttpClient();
         File file = new File(map.get(path));
         ArrayList<String> urls = ReadFiledata.txt2String(file);
         Random random = new Random();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .followRedirects(true)
+                .build();
+
         Request request = new Request.Builder()
                 .url(urls.get(random.nextInt(urls.size())))
                 .get()
@@ -85,20 +89,5 @@ public class RandomApi {
         byte[] bytes1 = response.body().bytes();
         return bytes1;
     }
-
-//    @GetMapping(value = "/",produces = MediaType.IMAGE_JPEG_VALUE)
-//    @ResponseBody
-//    public byte[] test() throws IOException {
-//        File file = new File(imageFile);
-//        ArrayList<String> urls = ReadFiledata.txt2String(file);
-//        Random random = new Random();
-//        Request request = new Request.Builder()
-//                .url(urls.get(random.nextInt(urls.size())))
-//                .get()
-//                .build();
-//        Response response = client.newCall(request).execute();
-//        byte[] bytes1 = response.body().bytes();
-//        return bytes1;
-//    }
 
 }
