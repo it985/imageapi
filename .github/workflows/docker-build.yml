@@ -19,7 +19,7 @@ jobs:
       - name: Build and push Docker image
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN  }}
         run: |
           # Get commit hash
           COMMIT_HASH=$(git rev-parse --short HEAD)
