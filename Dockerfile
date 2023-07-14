@@ -1,5 +1,5 @@
 # 使用一个基础的Java镜像作为构建环境
-FROM maven:3.6.3-jdk-11-slim
+FROM maven:3.8.1-openjdk-11-slim AS builder
 # 设置工作目录
 WORKDIR /app
 # 将应用程序的依赖项复制到容器中
@@ -9,8 +9,10 @@ COPY *.txt  ./
 RUN mvn dependency:go-offline
 # 构建应用程序
 RUN mvn package -DskipTests
-## 使用一个轻量级的Java镜像作为最终镜像
-#FROM openjdk:11-jre-slim
+
+# 使用一个轻量级的Java镜像作为最终镜像
+FROM adoptopenjdk:11-jre-hotspot
+
 # 设置工作目录
 WORKDIR /app
 # 从构建阶段复制应用程序
