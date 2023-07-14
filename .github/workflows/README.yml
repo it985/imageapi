@@ -17,3 +17,4 @@ jobs:
           cat README.md > README-dockerhub.md
           docker run --rm -v "$(pwd):/workspace" -w /workspace \
             python:3-alpine sh -c "pip install -U twine && twine upload --skip-existing README-dockerhub.md"
+          cat dist/README-dockerhub.md
