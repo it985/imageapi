@@ -11,7 +11,7 @@ RUN mvn dependency:go-offline
 RUN mvn package -DskipTests
 
 # 使用一个轻量级的Java镜像作为最终镜像
-FROM adoptopenjdk:11-jre-hotspot
+FROM adoptopenjdk:11.0.11_9-jre-hotspot
 
 # 设置工作目录
 WORKDIR /app
