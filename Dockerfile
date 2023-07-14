@@ -1,5 +1,5 @@
 # 使用一个基础的Java镜像作为构建环境
-FROM openjdk:11-jdk-slim AS build
+FROM openjdk:11-jdk
 # 设置工作目录
 WORKDIR /app
 # 将应用程序的依赖项复制到容器中
