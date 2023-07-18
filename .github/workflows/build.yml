@@ -34,7 +34,7 @@ jobs:
         run: mvn clean package --batch-mode
       - name: Get Last Commit Message
         id: commit_message
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           script: |
             const commits = await github.repos.listCommits({
